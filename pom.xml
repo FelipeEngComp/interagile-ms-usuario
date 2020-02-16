@@ -78,7 +78,11 @@
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-jpa</artifactId>
 		</dependency>
-
+		<dependency>
+			<groupId>com.interagile.cliente</groupId>
+			<artifactId>commons-db</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 
 	<build>

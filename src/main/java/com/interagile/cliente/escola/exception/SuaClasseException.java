@@ -1,4 +1,4 @@
-package com.interagile.cliente.usuario.exception;
+package com.interagile.cliente.escola.exception;
 
 public class SuaClasseException extends Exception{
 

@@ -1,8 +1,8 @@
-package com.interagile.cliente.usuario.model.dto;
+package com.interagile.cliente.escola.dto;
 
 import java.io.Serializable;
 
-import com.interagile.cliente.usuario.model.dbo.CursoDBO;
+import com.interagile.cliente.escola.dao.CursoDAO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -29,6 +29,6 @@ public class UsuarioDTO implements Serializable{
 	
 	private int semestre;
 	
-	private CursoDBO curso;
+	private CursoDAO curso;
 	
 }

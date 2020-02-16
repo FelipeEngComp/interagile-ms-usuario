@@ -1,4 +1,4 @@
-package com.interagile.cliente.usuario;
+package com.interagile.cliente.escola;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

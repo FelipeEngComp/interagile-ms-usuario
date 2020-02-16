@@ -1,4 +1,4 @@
-package com.interagile.cliente.usuario.controller;
+package com.interagile.cliente.escola.controller;
 
 import java.util.Arrays;
 import java.util.List;
@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.interagile.cliente.usuario.response.Response;
-import com.interagile.cliente.usuario.response.Response.ResponseBuilder;
-import com.interagile.cliente.usuario.service.IUsuarioService;
+import com.interagile.cliente.escola.response.Response;
+import com.interagile.cliente.escola.response.Response.ResponseBuilder;
+import com.interagile.cliente.escola.service.IUsuarioService;
 
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -38,7 +38,7 @@ public class UsuarioController {
 		LOG.debug("Iniciando a controller do usuario");
 		ResponseBuilder<List<String>> responseBuilder = Response.builder();
 		
-		usuarioService.consultaListaDeAlunos().map(listaUsuario->{
+		return usuarioService.consultaListaDeAlunos().map(listaUsuario->{
 			responseBuilder.data(listaUsuario);
 			responseBuilder.status(HttpStatus.OK.value());
 			return ResponseEntity.status(HttpStatus.OK).body(responseBuilder.build());
@@ -47,8 +47,9 @@ public class UsuarioController {
 			responseBuilder.erros(Arrays.asList(e.getMessage()));
 			responseBuilder.status(HttpStatus.OK.value());
 			return Mono.just(ResponseEntity.status(HttpStatus.OK).body(responseBuilder.build()));
-		}).subscribe();
+		});
 		
-		return Mono.just(ResponseEntity.status(HttpStatus.OK).body(responseBuilder.build()));
 	}
+	
+	
 }

@@ -1,4 +1,4 @@
-package com.interagile.cliente.usuario.response;
+package com.interagile.cliente.escola.response;
 
 import java.util.List;
 

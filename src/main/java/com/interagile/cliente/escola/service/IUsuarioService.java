@@ -1,8 +1,8 @@
-package com.interagile.cliente.usuario.service;
+package com.interagile.cliente.escola.service;
 
 import java.util.List;
 
-import com.interagile.cliente.usuario.model.dto.UsuarioDTO;
+import com.interagile.cliente.escola.dto.UsuarioDTO;
 
 import reactor.core.publisher.Mono;
 

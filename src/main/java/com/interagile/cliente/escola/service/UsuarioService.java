@@ -1,4 +1,4 @@
-package com.interagile.cliente.usuario.service;
+package com.interagile.cliente.escola.service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,9 +6,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.interagile.cliente.usuario.model.dbo.UsuarioDBO;
-import com.interagile.cliente.usuario.model.dto.UsuarioDTO;
-import com.interagile.cliente.usuario.repository.IUsuarioRepository;
+import com.interagile.cliente.escola.dao.UsuarioDAO;
+import com.interagile.cliente.escola.dto.UsuarioDTO;
+import com.interagile.cliente.escola.repository.IUsuarioRepository;
 
 import reactor.core.publisher.Mono;
 
@@ -25,12 +25,12 @@ public class UsuarioService implements IUsuarioService {
 	@Override
 	public Mono<List<String>> consultaListaDeAlunos() {
 		try {
-			List<UsuarioDBO> usuarioDBO = this.usuarioRepository.findAll();
+			List<UsuarioDAO> usuarioDBO = this.usuarioRepository.findAll();
 
 			List<String> listaDeAlunos = new ArrayList<String>();
 
-			for (UsuarioDBO usr : usuarioDBO) {
-				if (usr.getTipoUsuario().equals("aluno")) {
+			for (UsuarioDAO usr : usuarioDBO) {
+				if (usr.getTipoUsuario() == 0) {
 					listaDeAlunos.add(usr.getNome());
 				}
 			}
