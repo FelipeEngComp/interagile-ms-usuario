@@ -19,7 +19,6 @@ import com.interagile.cliente.escola.service.IUsuarioMatriculaService;
 
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import reactor.core.publisher.Mono;
 
 @RestController
 @RequestMapping("/usuario")
@@ -34,21 +33,25 @@ public class UsuarioMatriculaController {
 	@PostMapping("/matricula/aluno/{cpf}")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Sucesso na requisição"),
 			@ApiResponse(code = 400, message = "Erro na requisição") })
-	public Mono<ResponseEntity<Response<Boolean>>> matriculaAluno(@PathVariable String cpf) {
+	public ResponseEntity<Response<Boolean>> matriculaAluno(@PathVariable String cpf) {
 		LOG.debug("Iniciando a controller do usuario");
 		ResponseBuilder<Boolean> responseBuilder = Response.builder();
 		
-		return usuarioMatriculaService.matricularAluno(cpf).map(usuarioMatriculado->{
+		try {
+		Boolean usuarioMatriculado = usuarioMatriculaService.matricularAluno(cpf);
+		
 			responseBuilder.data(usuarioMatriculado);
 			responseBuilder.status(HttpStatus.OK.value());
 			return ResponseEntity.status(HttpStatus.OK).body(responseBuilder.build());
 			
-		}).onErrorResume(e->{
+		}catch (Exception e) {
+			// TODO: handle exception
 			responseBuilder.data(false);
 			responseBuilder.erros(Arrays.asList(e.getMessage()));
 			responseBuilder.status(HttpStatus.INTERNAL_SERVER_ERROR.value());
-			return Mono.just(ResponseEntity.status(HttpStatus.OK).body(responseBuilder.build()));
-		});
+			return ResponseEntity.status(HttpStatus.OK).body(responseBuilder.build());
+		}
+		
 		
 	}
 	
