@@ -6,6 +6,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -24,12 +25,15 @@ import io.swagger.annotations.ApiResponses;
 @RestController
 @RequestMapping("/usuario")
 @CrossOrigin(origins = "*")
-public class UsuarioController {
+public class AlunoController {
 
-	private static final Logger LOG = LoggerFactory.getLogger(UsuarioController.class);
+	private static final Logger LOG = LoggerFactory.getLogger(AlunoController.class);
 
 	@Autowired
 	private IUsuarioService usuarioService;
+	
+	@Value("${user.name}")
+	private String userName;
 
 	@GetMapping("/alunos")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Sucesso na requisição"),
@@ -40,6 +44,24 @@ public class UsuarioController {
 		try {
 			List<AlunoDB> listaAlunos = usuarioService.consultaListaDeAlunos();
 			responseBuilder.data(listaAlunos);
+			responseBuilder.status(HttpStatus.OK.value());
+			return ResponseEntity.status(HttpStatus.OK).body(responseBuilder.build());
+		} catch (Exception e) {
+			responseBuilder.erros(Arrays.asList(e.getMessage()));
+			responseBuilder.status(HttpStatus.OK.value());
+			return ResponseEntity.status(HttpStatus.OK).body(responseBuilder.build());
+		}
+
+	}
+	
+	@GetMapping("/nome")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Sucesso na requisição"),
+			@ApiResponse(code = 400, message = "Erro na requisição") })
+	public ResponseEntity<Response<String>> consultaUsuario() {
+		LOG.debug("Iniciando a controller do usuario");
+		ResponseBuilder<String> responseBuilder = Response.builder();
+		try {
+			responseBuilder.data(userName);
 			responseBuilder.status(HttpStatus.OK.value());
 			return ResponseEntity.status(HttpStatus.OK).body(responseBuilder.build());
 		} catch (Exception e) {
