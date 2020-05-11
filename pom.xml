@@ -12,7 +12,7 @@
 	<groupId>com.interagile.cliente</groupId>
 	<artifactId>ms-usuario</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>demo</name>
+	<name>usuario</name>
 	<description>Projeto para o microserviço de usuário</description>
 
 	<properties>
@@ -79,9 +79,14 @@
 			<artifactId>spring-data-jpa</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.interagile.cliente</groupId>
-			<artifactId>commons-db</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<groupId>com.github.FelipeEngComp</groupId>
+			<artifactId>interagile-commons</artifactId>
+			<version>develop-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.github.FelipeEngComp</groupId>
+			<artifactId>interagile-commons-db</artifactId>
+			<version>develop-SNAPSHOT</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/br.com.caelum.stella/caelum-stella-core -->
 		<dependency>
@@ -91,7 +96,14 @@
 		</dependency>
 
 	</dependencies>
-
+	
+	<repositories>
+		<repository>
+			<id>jitpack.io</id>
+			<url>https://jitpack.io</url>
+		</repository>
+	</repositories>
+	
 	<build>
 		<plugins>
 			<plugin>

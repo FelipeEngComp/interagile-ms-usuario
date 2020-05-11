@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.interagile.cliente.escola.dao.RegistroDAO;
-import com.interagile.cliente.escola.exception.ContaCadastradaException;
+import com.interagile.cliente.escola.exception.CadastradoException;
 import com.interagile.cliente.escola.repository.IRegistroRepository;
 
 import br.com.caelum.stella.validation.CPFValidator;
@@ -18,6 +18,7 @@ public class UsuarioMatriculaService implements IUsuarioMatriculaService {
 
 	private IRegistroRepository registroRepository;
 	private static final int ALUNO = 1;
+	private static final int PROFESSOR = 2;
 
 	@Autowired
 	public UsuarioMatriculaService(IRegistroRepository registroRepository) {
@@ -34,7 +35,7 @@ public class UsuarioMatriculaService implements IUsuarioMatriculaService {
 			cpfValidator.assertValid(cpf);
 			
 			if (registroRepository.findRegistroByCpf(cpf)!=null) {
-				throw new ContaCadastradaException("Usuario já matriculado",HttpStatus.BAD_REQUEST.value());
+				throw new CadastradoException("Usuario já matriculado",HttpStatus.BAD_REQUEST.value());
 			}
 			
 			Random random = new Random();
@@ -51,8 +52,8 @@ public class UsuarioMatriculaService implements IUsuarioMatriculaService {
 			return true;
 		} catch (InvalidStateException e) {
 			throw new InvalidStateException(e.getInvalidMessages());
-		}catch (ContaCadastradaException e) {
-			throw  e;
+		}catch (CadastradoException contaCadastradaException) {
+			throw  contaCadastradaException;
 		}catch (Exception e) {
 			throw new Exception(e.getMessage());
 		} 

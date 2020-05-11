@@ -10,8 +10,6 @@ import com.interagile.cliente.escola.dao.UsuarioDAO;
 import com.interagile.cliente.escola.dto.UsuarioDTO;
 import com.interagile.cliente.escola.repository.IUsuarioRepository;
 
-import reactor.core.publisher.Mono;
-
 @Service
 public class UsuarioService implements IUsuarioService {
 
@@ -23,7 +21,7 @@ public class UsuarioService implements IUsuarioService {
 	}
 
 	@Override
-	public Mono<List<String>> consultaListaDeAlunos() {
+	public List<String> consultaListaDeAlunos() {
 		try {
 			List<UsuarioDAO> usuarioDBO = this.usuarioRepository.findAll();
 
@@ -35,20 +33,20 @@ public class UsuarioService implements IUsuarioService {
 				}
 			}
 
-			return Mono.just(listaDeAlunos);
+			return listaDeAlunos;
 		} catch (Exception e) {
-			return Mono.error(e);
+			throw e;
 		}
 	}
-	
+
 	@Override
-	public Mono<Boolean> cadastroAluno(UsuarioDTO usuario){
-		return Mono.just(true);
+	public Boolean cadastroAluno(UsuarioDTO usuario) {
+		return true;
 	}
-	
+
 	@Override
-	public Mono<Boolean> cadastroProfessor(UsuarioDTO usuario){
-		return Mono.just(true);
+	public Boolean cadastroProfessor(UsuarioDTO usuario) {
+		return true;
 	}
 
 }
