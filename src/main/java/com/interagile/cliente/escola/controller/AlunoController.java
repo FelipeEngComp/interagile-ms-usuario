@@ -32,7 +32,7 @@ public class AlunoController {
 	@Autowired
 	private IUsuarioService usuarioService;
 	
-	@Value("${user.name}")
+	@Value("${html.felipe}")
 	private String userName;
 
 	@GetMapping("/alunos")
