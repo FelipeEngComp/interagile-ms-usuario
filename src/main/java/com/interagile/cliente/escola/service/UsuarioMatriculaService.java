@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import com.interagile.cliente.escola.dao.RegistroDAO;
 import com.interagile.cliente.escola.exception.CadastradoException;
+import com.interagile.cliente.escola.model.RegistroDB;
 import com.interagile.cliente.escola.repository.IRegistroRepository;
 
 import br.com.caelum.stella.validation.CPFValidator;
@@ -41,7 +41,7 @@ public class UsuarioMatriculaService implements IUsuarioMatriculaService {
 			Random random = new Random();
 			String matricula = String.format("%06d", random.nextInt(9999999));
 
-			RegistroDAO registro = new RegistroDAO();
+			RegistroDB registro = new RegistroDB();
 
 			registro.setCpf(cpf);
 			registro.setMatricula("MAT"+matricula);

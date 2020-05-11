@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.interagile.cliente.escola.model.AlunoDB;
 import com.interagile.cliente.escola.response.Response;
 import com.interagile.cliente.escola.response.Response.ResponseBuilder;
 import com.interagile.cliente.escola.service.IUsuarioService;
@@ -30,14 +31,14 @@ public class UsuarioController {
 	@Autowired
 	private IUsuarioService usuarioService;
 
-	@GetMapping("/consultar/alunos")
+	@GetMapping("/alunos")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Sucesso na requisição"),
 			@ApiResponse(code = 400, message = "Erro na requisição") })
-	public ResponseEntity<Response<List<String>>> consultaAlunos() {
+	public ResponseEntity<Response<List<AlunoDB>>> consultaAlunos() {
 		LOG.debug("Iniciando a controller do usuario");
-		ResponseBuilder<List<String>> responseBuilder = Response.builder();
+		ResponseBuilder<List<AlunoDB>> responseBuilder = Response.builder();
 		try {
-			List<String> listaAlunos = usuarioService.consultaListaDeAlunos();
+			List<AlunoDB> listaAlunos = usuarioService.consultaListaDeAlunos();
 			responseBuilder.data(listaAlunos);
 			responseBuilder.status(HttpStatus.OK.value());
 			return ResponseEntity.status(HttpStatus.OK).body(responseBuilder.build());

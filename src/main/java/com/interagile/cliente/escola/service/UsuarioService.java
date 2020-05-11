@@ -1,39 +1,30 @@
 package com.interagile.cliente.escola.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.interagile.cliente.escola.dao.UsuarioDAO;
 import com.interagile.cliente.escola.dto.UsuarioDTO;
-import com.interagile.cliente.escola.repository.IUsuarioRepository;
+import com.interagile.cliente.escola.model.AlunoDB;
+import com.interagile.cliente.escola.repository.IAlunoRepository;
 
 @Service
 public class UsuarioService implements IUsuarioService {
 
-	IUsuarioRepository usuarioRepository;
+	IAlunoRepository alunoRepository;
 
 	@Autowired
-	public UsuarioService(IUsuarioRepository usuarioRepository) {
-		this.usuarioRepository = usuarioRepository;
+	public UsuarioService(IAlunoRepository alunoRepository) {
+		this.alunoRepository = alunoRepository;
 	}
 
 	@Override
-	public List<String> consultaListaDeAlunos() {
+	public List<AlunoDB> consultaListaDeAlunos() {
 		try {
-			List<UsuarioDAO> usuarioDBO = this.usuarioRepository.findAll();
+			List<AlunoDB> usuarioDBO = this.alunoRepository.findAll();
 
-			List<String> listaDeAlunos = new ArrayList<String>();
-
-			for (UsuarioDAO usr : usuarioDBO) {
-				if (usr.getTipoUsuario() == 0) {
-					listaDeAlunos.add(usr.getNome());
-				}
-			}
-
-			return listaDeAlunos;
+			return usuarioDBO;
 		} catch (Exception e) {
 			throw e;
 		}
