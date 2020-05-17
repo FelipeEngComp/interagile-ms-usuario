@@ -29,7 +29,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
 @RestController
-@RequestMapping("/alunos")
+@RequestMapping("/aluno")
 @Api(value = "Aluno")
 @CrossOrigin(origins = "*")
 public class AlunoController {
