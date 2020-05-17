@@ -3,6 +3,7 @@ package com.interagile.cliente.escola.controller;
 import java.util.Arrays;
 import java.util.List;
 
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +18,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.interagile.cliente.escola.exception.UsuarioException;
-import com.interagile.cliente.escola.model.AlunoCadastro;
-import com.interagile.cliente.escola.model.AlunoDB;
+import com.interagile.cliente.escola.model.ProfessorCadastro;
+import com.interagile.cliente.escola.model.ProfessorDB;
 import com.interagile.cliente.escola.response.Response;
 import com.interagile.cliente.escola.response.Response.ResponseBuilder;
-import com.interagile.cliente.escola.service.IAlunoService;
+import com.interagile.cliente.escola.service.IProfessorService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -29,26 +30,26 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
 @RestController
-@RequestMapping("/alunos")
-@Api(value = "Aluno")
+@RequestMapping("/professores")
+@Api(value = "Professor")
 @CrossOrigin(origins = "*")
-public class AlunoController {
+public class ProfessorController {
 
-	private static final Logger LOG = LoggerFactory.getLogger(AlunoController.class);
+	private static final Logger LOG = LoggerFactory.getLogger(ProfessorController.class);
 
 	@Autowired
-	private IAlunoService alunoService;
+	private IProfessorService professorService;
 
 	@GetMapping("/")
 	@ApiOperation(value = "Listar alunos")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Sucesso na requisição"),
 			@ApiResponse(code = 404, message = "Erro na requisição") })
-	public ResponseEntity<Response<List<AlunoDB>>> listar() {
+	public ResponseEntity<Response<List<ProfessorDB>>> listar() {
 		LOG.debug("Iniciando a controller de listar Alunos");
-		ResponseBuilder<List<AlunoDB>> responseBuilder = Response.builder();
+		ResponseBuilder<List<ProfessorDB>> responseBuilder = Response.builder();
 		try {
-			List<AlunoDB> listaAlunos = alunoService.listar();
-			responseBuilder.data(listaAlunos);
+			List<ProfessorDB> listaProfessores = this.professorService.listar();
+			responseBuilder.data(listaProfessores);
 			responseBuilder.status(HttpStatus.OK.value());
 			return ResponseEntity.status(HttpStatus.OK).body(responseBuilder.build());
 		} catch (Exception e) {
@@ -63,12 +64,12 @@ public class AlunoController {
 	@ApiOperation(value = "Consultar Aluno")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Sucesso na requisição"),
 			@ApiResponse(code = 404, message = "Erro na requisição") })
-	public ResponseEntity<Response<AlunoDB>> consultar(@PathVariable String matricula) {
+	public ResponseEntity<Response<ProfessorDB>> consultar(@PathVariable String matricula) {
 		LOG.debug("Iniciando a controller de consultar aluno");
-		ResponseBuilder<AlunoDB> responseBuilder = Response.builder();
+		ResponseBuilder<ProfessorDB> responseBuilder = Response.builder();
 		try {
-			AlunoDB aluno = alunoService.consultar(matricula);
-			responseBuilder.data(aluno);
+			ProfessorDB professor = this.professorService.consultar(matricula);
+			responseBuilder.data(professor);
 			responseBuilder.status(HttpStatus.OK.value());
 			return ResponseEntity.status(HttpStatus.OK).body(responseBuilder.build());
 		} catch (Exception e) {
@@ -80,14 +81,14 @@ public class AlunoController {
 	}
 	
 	@PostMapping("/")
-	@ApiOperation(value = "Cadastrar aluno")
+	@ApiOperation(value = "Cadastrar professor")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Sucesso na requisição"),
 			@ApiResponse(code = 404, message = "Erro na requisição") })
-	public ResponseEntity<Response<Boolean>> cadastrar(@RequestBody AlunoCadastro aluno) {
-		LOG.debug("Iniciando a controller de consultar aluno");
-		ResponseBuilder<Boolean> responseBuilder = Response.builder();
+	public ResponseEntity<Response<Boolean>> cadastrar(@RequestBody ProfessorCadastro professor) {
+		LOG.debug("Iniciando a controller de consultar professor");
+		ResponseBuilder<Boolean> responseBuilder = Response.builder(); 
 		try {
-			responseBuilder.data(alunoService.cadastrar(aluno));
+			responseBuilder.data(this.professorService.cadastrar(professor));
 			responseBuilder.status(HttpStatus.OK.value());
 			return ResponseEntity.status(HttpStatus.OK).body(responseBuilder.build());
 		} catch (UsuarioException erroUsuario) {
